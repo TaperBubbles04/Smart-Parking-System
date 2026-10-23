@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cctype>
 #include "ParkingSystem.h"
 
 using namespace std;
@@ -7,11 +8,38 @@ using namespace std;
 Time readTime()
 {
     int h, m;
-    do
+    string period;
+    while (true)
     {
-        cout << "Enter time (HH MM, 24-hour): ";
-        cin >> h >> m;
-    } while (h < 0 || h > 23 || m < 0 || m > 59);
+        cout << "Enter time (HH MM AM/PM, e.g. 9 30 PM): ";
+        cin >> h >> m >> period;
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input. Use spaces, like: 9 30 PM\n";
+            continue;
+        }
+        for (size_t i = 0; i < period.length(); i++)
+        {
+            period[i] = toupper(period[i]);
+        }
+        if (h >= 1 && h <= 12 && m >= 0 && m <= 59 && (period == "AM" || period == "PM"))
+        {
+            break;
+        }
+        cout << "Invalid time. Hour is 1-12, minute is 0-59, then AM or PM.\n";
+    }
+
+    // Convert 12-hour to 24-hour for internal storage
+    if (period == "AM")
+    {
+        if (h == 12) h = 0; // 12 AM = midnight
+    }
+    else
+    {
+        if (h != 12) h += 12; // 12 PM stays 12
+    }
     return Time(h, m);
 }
 
@@ -42,8 +70,8 @@ void showHelp()
     cout << "  - Option 4 looks up any ticket by its ID.\n\n";
 
     cout << "TIME FORMAT\n";
-    cout << "  - 24-hour clock, hour and minute separated by a space.\n";
-    cout << "  - Example: 9:30 PM is entered as  21 30\n";
+    cout << "  - Enter hour, minute and AM/PM separated by spaces.\n";
+    cout << "  - Examples: 9 30 AM | 12 05 PM | 11 45 pm\n";
     cout << "  - All times must be on the same day (no overnight stays).\n";
     cout << "=============================================\n";
 }
