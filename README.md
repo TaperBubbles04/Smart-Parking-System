@@ -83,21 +83,27 @@ The interface and implementation are separated: one header holds every declarati
 
 ## Build and Run
 
-### Using g++ (command line)
+### 1. Console Application (using g++)
 
 ```bash
+cd Code
 g++ main.cpp Time.cpp Vehicle.cpp Slot.cpp Ticket.cpp ParkingLot.cpp -o parking
 ./parking
 ```
 
-### Using Visual Studio
+### 2. Console Application (using Visual Studio)
 
 1. Create a new **Console App** (C++) project
 2. Delete the auto-generated sample `.cpp` file
-3. Add `ParkingSystem.h` under Header Files, and all six `.cpp` files under Source Files
+3. Add `Code/ParkingSystem.h` under Header Files, and all six `Code/*.cpp` files under Source Files
 4. Press **Ctrl + F5** to build and run
 
-If you see a precompiled header error, go to _Project → Properties → C/C++ → Precompiled Headers_ and choose **Not Using Precompiled Headers**.
+### 3. Visual C++ Desktop GUI
+
+A desktop graphical interface is available under `Visual_CPP/`.
+- **On Windows:** Open in Visual Studio or compile with `cl` (MSVC) / MinGW `g++`.
+- **On Linux (Ubuntu):** Compile with MinGW and run via `wine parking_gui.exe`.
+- See [Visual_CPP/README_VISUAL_CPP.md](Visual_CPP/README_VISUAL_CPP.md) for complete instructions.
 
 ---
 
@@ -163,7 +169,7 @@ The stay was 95 minutes, which rounds up to 2 hours, so the fee is 2 x Rs. 20 = 
 - [ ] **STL:** `vector` and `map` replace the fixed arrays
 - [ ] **Exception handling:** `throw` and `try/catch` replace return codes
 - [ ] **Stream handling:** save and load the lot using `ofstream` and `ifstream`
-- [ ] **GUI:** Visual C++ front end replacing `main.cpp`
+- [x] **GUI:** Visual C++ desktop front end in `Visual_CPP/` (`ParkingLot_Win32.cpp`)
 
 ---
 

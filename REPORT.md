@@ -31,14 +31,17 @@ Smart-Parking-System/
 ├── .gitignore             # Excludes binaries, object files, and IDE build artifacts
 ├── README.md              # Project overview, build instructions, and sample runs
 ├── REPORT.md              # Comprehensive academic OOP report (this document)
-└── Code/
-    ├── ParkingSystem.h    # Unified Interface: Declarations of all five domain classes
-    ├── Time.cpp           # Implementation: Time arithmetic and stream formatting
-    ├── Vehicle.cpp        # Implementation: Vehicle metadata and rate mapping
-    ├── Slot.cpp           # Implementation: Parking slot state tracking
-    ├── Ticket.cpp         # Implementation: Ticket lifecycle and fee calculation
-    ├── ParkingLot.cpp     # Implementation: Lot orchestration (park/unpark algorithms)
-    └── main.cpp           # Test Driver: Menu CLI and presentation logic
+├── Code/
+│   ├── ParkingSystem.h    # Unified Interface: Declarations of all five domain classes
+│   ├── Time.cpp           # Implementation: Time arithmetic and stream formatting
+│   ├── Vehicle.cpp        # Implementation: Vehicle metadata and rate mapping
+│   ├── Slot.cpp           # Implementation: Parking slot state tracking
+│   ├── Ticket.cpp         # Implementation: Ticket lifecycle and fee calculation
+│   ├── ParkingLot.cpp     # Implementation: Lot orchestration (park/unpark algorithms)
+│   └── main.cpp           # Test Driver: Menu CLI and presentation logic
+└── Visual_CPP/
+    ├── ParkingLot_Win32.cpp # Visual C++ desktop GUI implementation
+    └── README_VISUAL_CPP.md # Visual C++ GUI setup and execution guide
 ```
 
 ### Architectural Rationale

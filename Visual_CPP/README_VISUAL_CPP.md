@@ -12,12 +12,12 @@ The GUI connects directly to the core C++ backend (`ParkingSystem.h`). Because o
 
 ## 2. What the GUI Contains
 
-- **Park Vehicle Section:** Input fields for vehicle license plate, vehicle type (1=Bike, 2=Car, 3=Truck), entry time (Hour, Minute, AM/PM), and a "Park Vehicle" button.
-- **Unpark Vehicle Section:** Input fields for Ticket ID, exit time, and an "Unpark & Calculate Fee" button.
-- **Lot Status Button:** Displays whether each of the 10 slots is `FREE` or `OCCUPIED`.
-- **Ticket Lookup:** Input a Ticket ID to view its details.
+- **Live Slot Status Matrix:** Displays all 10 parking slots in a grid at the top. Free slots show in green (`Slot: FREE`) and occupied slots show in red (`Slot: OCCUPIED`), updating automatically on park or unpark.
+- **Park Vehicle Section:** Input fields for vehicle license plate, vehicle type (1=Bike, 2=Car, 3=Truck), entry time (Hour, Minute, AM/PM), and a "PARK VEHICLE" button.
+- **Unpark Vehicle Section:** Input fields for Ticket ID, exit time, and an "UNPARK & CALCULATE FEE" button.
+- **Ticket Lookup:** Input a Ticket ID to look up its details anytime.
 - **Output Screen:** A multi-line text box that displays printed tickets and fee receipts using the overloaded `<<` operator.
-- **Message Popups:** Simple alerts if the lot is full, vehicle is already parked, or an invalid ticket is entered.
+- **Message Popups:** Dialog alerts if the lot is full, vehicle is already parked, or an invalid ticket is entered.
 
 ---
 
@@ -82,7 +82,7 @@ If you prefer using the Visual Studio IDE:
 The GUI is straightforward:
 1. When the window opens (`WM_CREATE`), standard Windows labels, edit boxes, and buttons are created with `CreateWindowA`.
 2. When a button is clicked (`WM_COMMAND`):
-   - **Park:** Reads plate, type, and entry time from the text boxes, calls `lot.park()`, and prints the ticket to the output box.
-   - **Unpark:** Reads ticket ID and exit time, calls `lot.unpark()`, and prints the receipt with the fee.
-   - **Status:** Calls `lot.isSlotFree()` in a loop and shows which slots are free.
+   - **Park:** Reads plate, type, and entry time from the text boxes, calls `lot.park()`, updates the slot grid, and prints the ticket to the output box.
+   - **Unpark:** Reads ticket ID and exit time, calls `lot.unpark()`, updates the slot grid, and prints the receipt with the fee.
+   - **Status Update:** The slot matrix updates automatically by querying `lot.isSlotFree()`, visually showing free and occupied bays.
 3. All inputs and fee logic are handled by the same C++ classes used in the console version.
