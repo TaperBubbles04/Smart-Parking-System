@@ -35,17 +35,23 @@ A console-based parking lot manager written in C++, built as an Object-Oriented 
 
 ```
 Smart-Parking-System/
-├── ParkingSystem.h    # Interface: declarations of all five classes
-├── Time.cpp           # Time class implementation (operator- and operator<<)
-├── Vehicle.cpp        # Vehicle class implementation
-├── Slot.cpp           # Slot class implementation
-├── Ticket.cpp         # Ticket class implementation (fee calculation, operator<<)
-├── ParkingLot.cpp     # ParkingLot class implementation (park / unpark logic)
-├── main.cpp           # Test drive file: menu and all user input/output
+├── Code/
+│   ├── ParkingSystem.h    # Interface: declarations of all five classes
+│   ├── Time.cpp           # Time class implementation (operator- and operator<<)
+│   ├── Vehicle.cpp        # Vehicle class implementation
+│   ├── Slot.cpp           # Slot class implementation
+│   ├── Ticket.cpp         # Ticket class implementation (fee calculation, operator<<)
+│   ├── ParkingLot.cpp     # ParkingLot class implementation (park / unpark logic)
+│   └── main.cpp           # Console CLI driver
+├── Visual_CPP/
+│   ├── ParkingLot_Win32.cpp # Visual C++ desktop GUI implementation
+│   └── README_VISUAL_CPP.md # Visual C++ GUI setup and execution guide
+├── REPORT.md              # Academic OOP concepts report
+├── .gitignore             # Git ignore rules for build artifacts
 └── README.md
 ```
 
-The interface and implementation are separated: one header holds every declaration, and each class has its own `.cpp` file. All `cin`/`cout` code lives only in `main.cpp`, so a GUI can replace that file without touching the rest.
+The interface and implementation are separated: one header holds every declaration, and each class has its own `.cpp` file. All console `cin`/`cout` code lives only in `main.cpp`. The Visual C++ GUI replaces `main.cpp` without modifying any domain classes.
 
 ---
 
@@ -53,7 +59,7 @@ The interface and implementation are separated: one header holds every declarati
 
 | Class        | Responsibility                                                                                                         |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `Time`       | Stores hour and minute. Overloads `-` to return the difference in minutes and `<<` to print as `HH:MM`                 |
+| `Time`       | Stores hour and minute. Overloads `-` to return the difference in minutes and `<<` to print in 12-hour AM/PM format    |
 | `Vehicle`    | Stores plate number and type. Provides the type name and hourly rate                                                   |
 | `Slot`       | Represents one parking slot. Tracks whether it is free and which ticket occupies it                                    |
 | `Ticket`     | Stores vehicle, slot, entry and exit times, and fee. Closes itself and calculates the fee. Overloads `<<` for printing |
@@ -71,27 +77,33 @@ The interface and implementation are separated: one header holds every declarati
 
 - Time is **rounded up** to full hours (95 minutes is charged as 2 hours)
 - **Minimum charge** is 1 hour
-- All times use the 24-hour format and must fall on the same day
+- All times use the 12-hour format with AM/PM (e.g., 9 30 AM) and must fall on the same day
 
 ---
 
 ## Build and Run
 
-### Using g++ (command line)
+### 1. Console Application (using g++)
 
 ```bash
+cd Code
 g++ main.cpp Time.cpp Vehicle.cpp Slot.cpp Ticket.cpp ParkingLot.cpp -o parking
 ./parking
 ```
 
-### Using Visual Studio
+### 2. Console Application (using Visual Studio)
 
 1. Create a new **Console App** (C++) project
 2. Delete the auto-generated sample `.cpp` file
-3. Add `ParkingSystem.h` under Header Files, and all six `.cpp` files under Source Files
+3. Add `Code/ParkingSystem.h` under Header Files, and all six `Code/*.cpp` files under Source Files
 4. Press **Ctrl + F5** to build and run
 
-If you see a precompiled header error, go to _Project → Properties → C/C++ → Precompiled Headers_ and choose **Not Using Precompiled Headers**.
+### 3. Visual C++ Desktop GUI
+
+A desktop graphical interface is available under `Visual_CPP/`.
+- **On Windows:** Open in Visual Studio or compile with `cl` (MSVC) / MinGW `g++`.
+- **On Linux (Ubuntu):** Compile with MinGW and run via `wine parking_gui.exe`.
+- See [Visual_CPP/README_VISUAL_CPP.md](Visual_CPP/README_VISUAL_CPP.md) for complete instructions.
 
 ---
 
@@ -111,27 +123,27 @@ If you see a precompiled header error, go to _Project → Properties → C/C++ �
 
 ## Sample Run
 
-1. Choose **1**, enter plate `TN01AB1234`, type `2` (Car), time `09 30`:
+1. Choose **1**, enter plate `TN01AB1234`, type `2` (Car), time `9 30 AM`:
 
 ```
 ------- PARKING TICKET -------
 Ticket ID : 1
 Vehicle   : TN01AB1234 (Car)
 Slot      : 1
-Entry     : 09:30
+Entry     : 09:30 AM
 Status    : PARKED
 ------------------------------
 ```
 
-2. Choose **2**, enter Ticket ID `1`, exit time `11 05`:
+2. Choose **2**, enter Ticket ID `1`, exit time `11 05 AM`:
 
 ```
 ------- PARKING TICKET -------
 Ticket ID : 1
 Vehicle   : TN01AB1234 (Car)
 Slot      : 1
-Entry     : 09:30
-Exit      : 11:05
+Entry     : 09:30 AM
+Exit      : 11:05 AM
 Fee       : Rs. 40
 Status    : CLOSED
 ------------------------------
@@ -157,7 +169,7 @@ The stay was 95 minutes, which rounds up to 2 hours, so the fee is 2 x Rs. 20 = 
 - [ ] **STL:** `vector` and `map` replace the fixed arrays
 - [ ] **Exception handling:** `throw` and `try/catch` replace return codes
 - [ ] **Stream handling:** save and load the lot using `ofstream` and `ifstream`
-- [ ] **GUI:** Visual C++ front end replacing `main.cpp`
+- [x] **GUI:** Visual C++ desktop front end in `Visual_CPP/` (`ParkingLot_Win32.cpp`)
 
 ---
 
